@@ -1,0 +1,33 @@
+<html>
+<title>Koala - test_app_0002</title>
+<body>
+<script src='http://static.opentok.com/webrtc/v2.2/js/opentok.min.js'></script>
+<script type="text/javascript">
+  var apiKey    = "45102482";
+  var sessionId = "1_MX40NTEwMjQ4Mn5-MTQxNzk3NTYzNDUxN35CV29qV2pycTR2b2xuUERPMldVeUFIOHZ-fg";
+  var token     = "T1==cGFydG5lcl9pZD00NTEwMjQ4MiZzaWc9NDQ3NTFkYWNiOWZiYTNjN2QzOGY3YThkMTY5M2EzOWJhMzkyYTJmYzpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5URXdNalE0TW41LU1UUXhOemszTlRZek5EVXhOMzVDVjI5cVYycHljVFIyYjJ4dVVFUlBNbGRWZVVGSU9IWi1mZyZjcmVhdGVfdGltZT0xNDE3OTc1NjY0Jm5vbmNlPTAuMDM4NTA3ODYwMzU4MjIzMDcmZXhwaXJlX3RpbWU9MTQxODA2MjAxNg==";
+ 
+  var session = OT.initSession(apiKey, sessionId);
+ 
+  session.on("streamCreated", function(event) {
+    for(var i=0; i < event.streams.length; i++) {
+      if(streams[i].connection.connectionId == session.connection.connectionId) {
+        return;
+      }
+      var div = document.createElement('div');
+      div.setAttribute('id', 'stream' + streams[i].streamId);
+      document.body.appendChild(div);
+      session.subscribe(event.stream[i], div.id);
+    }
+    session.subscribe(event.stream);
+  });
+ 
+  session.connect(token, function(error) {
+    var publisher = OT.initPublisher();
+    session.publish(publisher);
+  });
+</script>
+<h1>You look like a Koalaaaa !!!</h1>
+<div id="myPublisherDiv"></div>
+</body>
+</html>
